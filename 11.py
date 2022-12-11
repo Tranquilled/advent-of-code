@@ -66,12 +66,6 @@ def input():
         "test": None,
         "true": None,
         "false": None} for _ in range(8)]
-    ops = {
-        "+": lambda x, y: x + y,
-        "-": lambda x, y: x - y,
-        "*": lambda x, y: x * y,
-        "/": lambda x, y: x / y
-    }
     with open(path.join(getcwd(), "11_input.txt"), "r") as f:
         i = 0
         for line in f:
@@ -82,24 +76,18 @@ def input():
             if "Starting items" in l:
                 monkeys[i]["items"] = [int(n) for n in l.split(": ")[1].split(", ")]
             if "Operation" in l:
-                n = re.search(r"([\+\-\*/]) (.+)", l)
+                n = re.search(r"new = (.+)$", l)
                 op = n.group(1)
-                try:
-                    num = int(n.group(2))
-                    monkeys[i]["operation"] = lambda x: ops[op](x, num)
-                except:
-                    if n.group(2) == "old":    
-                        monkeys[i]["operation"] = lambda x: ops[op](x, x)
+                monkeys[i]["operation"] = eval("lambda old: " + op)
             if "Test" in l:
                 n = re.search(r"(\d+)", l)
-                monkeys[i]["test"] = lambda x: x % int(n.group(1)) == 0
+                monkeys[i]["test"] = eval(f"lambda x: x % {n.group(1)} == 0")
             if "If true" in l:
                 n = re.search(r"(\d+)", l)
-                monkeys[i]["true"] = lambda a, x: a[int(n.group(1))]["items"].append(x)
+                monkeys[i]["true"] = eval(f'lambda a, x: a[{n.group(1)}]["items"].append(x)')
             if "If false" in l:
                 n = re.search(r"(\d+)", l)
-                print(i, n.group(0))
-                monkeys[i]["false"] = lambda a, x: a[int(n.group(1))]["items"].append(x)
+                monkeys[i]["false"] = eval(f'lambda a, x: a[{n.group(1)}]["items"].append(x)')
     return monkeys
 
 
@@ -113,7 +101,6 @@ def part_1(monkeys):
         while len(items) > 0:
             i = items.pop(0)
             # inspect, get bored
-            # print(m, i, "inspect")
             i = floor(monkey["operation"](i) / 3)
             activity[m] += 1
             # test
@@ -124,7 +111,6 @@ def part_1(monkeys):
             else:
                 # print(m, i, "false")
                 monkey["false"](monkeys, i)
-                # print(list(len(i["items"]) for i in monkeys))
         if m == len(monkeys) - 1:
             m = 0
             round += 1
@@ -171,4 +157,5 @@ def part_2(monkeys):
 if __name__ == "__main__":
     # print(input())
     # print(part_1(monkeys))
-    print(part_2(monkeys))
+    print(part_1(input()))
+    # print(part_2(monkeys))
