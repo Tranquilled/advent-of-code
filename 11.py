@@ -6,59 +6,6 @@ from math import floor
 from operator import itemgetter
 from os import path, getcwd
 
-monkeys = [
-    {
-    "items": [59, 65, 86, 56, 74, 57, 56],
-    "operation": lambda x: x * 17,
-    "test": lambda x: x % 3 == 0,
-    "true": lambda a, x: a[3]["items"].append(x),
-    "false": lambda a, x: a[6]["items"].append(x)
-    }, {
-    "items": [63, 83, 50, 63, 56],
-    "operation": lambda x: x + 2,
-    "test": lambda x: x % 13 == 0,
-    "true": lambda a, x: a[3]["items"].append(x),
-    "false": lambda a, x: a[0]["items"].append(x)
-    }, {
-    "items": [93, 79, 74, 55],
-    "operation": lambda x: x + 1,
-    "test": lambda x: x % 2 == 0,
-    "true": lambda a, x: a[0]["items"].append(x),
-    "false": lambda a, x: a[1]["items"].append(x)
-    }, {
-    "items": [86, 61, 67, 88, 94, 69, 56, 91],
-    "operation": lambda x: x + 7,
-    "test": lambda x: x % 11 == 0,
-    "true": lambda a, x: a[6]["items"].append(x),
-    "false": lambda a, x: a[7]["items"].append(x)
-    }, {
-    "items": [76, 50, 51],
-    "operation": lambda x: x ** 2,
-    "test": lambda x: x % 19 == 0,
-    "true": lambda a, x: a[2]["items"].append(x),
-    "false": lambda a, x: a[5]["items"].append(x)
-    }, {
-    "items": [77, 76],
-    "operation": lambda x: x + 8,
-    "test": lambda x: x % 17 == 0,
-    "true": lambda a, x: a[2]["items"].append(x),
-    "false": lambda a, x: a[1]["items"].append(x)
-    }, {
-    "items": [74],
-    "operation": lambda x: x * 2,
-    "test": lambda x: x % 5 == 0,
-    "true": lambda a, x: a[4]["items"].append(x),
-    "false": lambda a, x: a[7]["items"].append(x)
-    }, {
-    "items": [86, 85, 52, 86, 91, 95],
-    "operation": lambda x: x + 6,
-    "test": lambda x: x % 7 == 0,
-    "true": lambda a, x: a[4]["items"].append(x),
-    "false": lambda a, x: a[5]["items"].append(x)
-    }
-]
-
-
 def input():
     monkeys = [{
         "items": [],
